@@ -12,12 +12,29 @@ namespace modeloVirtualCChar.Controllers
         public HomeController(gestorBibliotecaContext contexto)
         {
             this.contexto = contexto;
-            Autor a = new Autor();
-            a.nombre_autor = "Filloa";
-            a.apellidos_autor = "Molina";
-            a.libros_con_autor = new List<Libro>();
+            /*Autor a = new Autor("Adolf", "Hitler", new List<Libro>());
+
             Insert i = new Insert(contexto);
+            Genero g = new Genero("Contitucional","Hostoria",new List<Libro> ());
+            Editorial ed = new Editorial("Editorial Nazi",new List<Libro>());
+            Coleccion co = new Coleccion("Quien es Hitler?",new List<Libro>());
+            Libro l = new Libro("urifgefguibj","Asi fur Hitler","2",10,ed,g,co,new List<Autor>(),new List<Prestamo>());
+            a.libros_con_autor.Add(l);
+            g.genero_con_libros.Add(l);
+            ed.editorial_con_libros.Add (l);
+            co.coleccion_con_libros.Add(l);
             i.insertarAutor(a);
+            i.insertarGenero(g);
+            i.insertarEditorial(ed);
+            i.insertarColeccion(co);
+            i.insertarLibro(l);
+            contexto.SaveChanges();*/
+            Select s = new Select(contexto);
+            List <Autor> autores=s.seleccionarAutor(); 
+            for(int i = 0; i < autores.Count; i++)
+            {
+                Console.WriteLine(autores[i].id_autor+" " + autores[i].nombre_autor+" " + autores[i].apellidos_autor);
+            }
 
         }
 

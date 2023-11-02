@@ -1,4 +1,5 @@
 ﻿using DB;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 public class Select
@@ -46,6 +47,13 @@ public class Select
     public List<Estado_Prestamo> seleccionarEstadoPrestamo()
     {
         return this.gb.Estados_Prestamos.ToList();
+       
+    }
+
+    public Autor SeleccionarAutor(string o)
+    {
+            return this.gb.Autores.FirstOrDefault(a => a.id_autor.ToString == o);
+
     }
 
 

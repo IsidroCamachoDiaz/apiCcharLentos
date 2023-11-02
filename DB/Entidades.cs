@@ -20,6 +20,16 @@ namespace DB
 
         public List<Libro> libros_con_autor { get; set; }
 
+        public Autor(string nombre_autor, string apellidos_autor, List<Libro> libros_con_autor)
+        {
+            this.nombre_autor = nombre_autor;
+            this.apellidos_autor = apellidos_autor;
+            this.libros_con_autor = libros_con_autor;
+        }
+        public Autor()
+        {
+
+        }
     }
 
    /* public class Rel_Autores_Libros
@@ -66,9 +76,22 @@ namespace DB
         public List<Autor> libro_con_autores { get; set; }
         public List<Prestamo> libro_con_prestamos { get; set; }
 
+        public Libro(string isbn_libro, string titulo_libro, string edicion_libro, int cantidad,Editorial editorial,Genero genero, Coleccion coleccion, List<Autor> libro_con_autores, List<Prestamo> libro_con_prestamos)
+        {
+            this.isbn_libro = isbn_libro;
+            this.titulo_libro = titulo_libro;
+            this.edicion_libro = edicion_libro;
+            this.cantidad = cantidad;
+            this.editorial = editorial;
+            this.genero = genero;
+            this.coleccion = coleccion;
+            this.libro_con_autores = libro_con_autores;
+            this.libro_con_prestamos = libro_con_prestamos;
+        }
+        public Libro()
+        {
 
-
-
+        }
     }
 
     public class Editorial
@@ -79,7 +102,15 @@ namespace DB
 
         public List<Libro> editorial_con_libros { get; set; }
 
+        public Editorial(string nombre_editorial, List<Libro> editorial_con_libros)
+        {
+            this.nombre_editorial = nombre_editorial;
+            this.editorial_con_libros = editorial_con_libros;
+        }
+        public Editorial()
+        {
 
+        }
     }
     public class Genero
     {
@@ -91,6 +122,17 @@ namespace DB
         public string descripcion_genero { get; set; }
 
         public List<Libro> genero_con_libros { get; set; }
+
+        public Genero(string nombre_genero, string descripcion_genero, List<Libro> genero_con_libros)
+        {
+            this.nombre_genero = nombre_genero;
+            this.descripcion_genero = descripcion_genero;
+            this.genero_con_libros = genero_con_libros;
+        }
+        public Genero()
+        {
+
+        }
     }
 
     public class Coleccion
@@ -100,6 +142,16 @@ namespace DB
         public string nombre_coleccion { get; set; }
 
         public List<Libro> coleccion_con_libros { get; set; }
+
+        public Coleccion(string nombre_coleccion, List<Libro> coleccion_con_libros)
+        {
+            this.nombre_coleccion = nombre_coleccion;
+            this.coleccion_con_libros = coleccion_con_libros;
+        }
+        public Coleccion()
+        {
+
+        }
     }
     public class Acceso
     {
@@ -109,6 +161,17 @@ namespace DB
         public string descipcion_acceso { get; set; }
 
         public List<Usuario> usuarios_con_acesso { get; set; }
+
+        public Acceso(string codigo_acceso, string descipcion_acceso, List<Usuario> usuarios_con_acesso)
+        {
+            this.codigo_acceso = codigo_acceso;
+            this.descipcion_acceso = descipcion_acceso;
+            this.usuarios_con_acesso = usuarios_con_acesso;
+        }
+        public Acceso()
+        {
+
+        }
     }
 
     public class Usuario
@@ -132,6 +195,25 @@ namespace DB
 
         public List<Prestamo> prestamos_de_usuario{ get; set; }
 
+        public Usuario(string dni_usuario, string nombre_usuario, string apellidos_usuario, string tlf_usuario, string email_usuario, string clave_usuario,Acceso acceso, bool estaBloqueado_usuario, DateTime fch_fin_bloqueo_usuario, DateTime fch_alta_usuario, DateTime fch_baja_usuario, List<Prestamo> prestamos_de_usuario)
+        {
+            this.dni_usuario = dni_usuario;
+            this.nombre_usuario = nombre_usuario;
+            this.apellidos_usuario = apellidos_usuario;
+            this.tlf_usuario = tlf_usuario;
+            this.email_usuario = email_usuario;
+            this.clave_usuario = clave_usuario;
+            this.acceso = acceso;
+            this.estaBloqueado_usuario = estaBloqueado_usuario;
+            this.fch_fin_bloqueo_usuario = fch_fin_bloqueo_usuario;
+            this.fch_alta_usuario = fch_alta_usuario;
+            this.fch_baja_usuario = fch_baja_usuario;
+            this.prestamos_de_usuario = prestamos_de_usuario;
+        }
+        public Usuario()
+        {
+
+        }
     }
     public class Prestamo
     {
@@ -152,7 +234,20 @@ namespace DB
 
         public List<Libro> libros_de_prestamo { get; set; }
 
+        public Prestamo(Usuario usuario, DateTime fch_inicio_prestamo, DateTime fch_fin_prestamo, DateTime fch_entrega_prestamo, long id_estado_prestamo, Estado_Prestamo estadoConPrestamo, List<Libro> libros_de_prestamo)
+        {
+            this.usuario = usuario;
+            this.fch_inicio_prestamo = fch_inicio_prestamo;
+            this.fch_fin_prestamo = fch_fin_prestamo;
+            this.fch_entrega_prestamo = fch_entrega_prestamo;
+            this.id_estado_prestamo = id_estado_prestamo;
+            this.estadoConPrestamo = estadoConPrestamo;
+            this.libros_de_prestamo = libros_de_prestamo;
+        }
+        public Prestamo()
+        {
 
+        }
     }
     public class Estado_Prestamo
     {
@@ -162,6 +257,17 @@ namespace DB
         public string descripcion_estado_prestamo { get; set; }
 
         public List<Prestamo> prestamos_con_estado { get; set; }
+
+        public Estado_Prestamo(string codigo_estado_prestamo, string descripcion_estado_prestamo, List<Prestamo> prestamos_con_estado)
+        {
+            this.codigo_estado_prestamo = codigo_estado_prestamo;
+            this.descripcion_estado_prestamo = descripcion_estado_prestamo;
+            this.prestamos_con_estado = prestamos_con_estado;
+        }
+        public Estado_Prestamo()
+        {
+
+        }
     }
 
     /*public class Rel_Prestamo_Libro

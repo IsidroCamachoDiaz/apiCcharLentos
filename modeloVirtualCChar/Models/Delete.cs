@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB;
+using System;
 
 public class Delete
 {
@@ -10,47 +11,38 @@ public class Delete
     }
     public void borrarAutor(Autor autor)
     {
-        this.gb.delete(autor);
-    }
-    public void borrarRelacionAutoresLibros(Rel_Autores_Libros relacion)
-    {
-        this.gb.delete(relacion);
+        this.gb.Autores.Remove(autor);
     }
     public void borrarLibro(Libro libro)
     {
-        this.gb.delete(libro);
+        this.gb.Libros.Remove(libro);
     }
     public void borrarEditorial(Editorial editorial)
     {
-        this.gb.delete(editorial);
+        this.gb.Editoriales.Remove(editorial);
     }
     public void borrarGenero(Genero genero)
     {
-        this.gb.delete(genero);
+        this.gb.Generos.Remove(genero);
     }
     public void borrarColeccion(Coleccion coleccion)
     {
-        this.gb.delete(coleccion);
+        this.gb.Colecciones.Remove(coleccion);
     }
     public void borrarAcceso(Acceso acceso)
     {
-        this.gb.delete(acceso);
+        this.gb.Accesos.Remove(acceso);
     }
     public void borrarUsuario(Usuario usuario)
     {
-        this.gb.delete(usuario);
+        this.gb.Usuarios.Remove(usuario);
     }
     public void borrarPrestamo(Prestamo prestamo)
     {
-        this.gb.delete(prestamo);
+        this.gb.Prestamos.Remove(prestamo);
     }
     public void borrarEstadoPrestamo(Estado_Prestamo estadoPrestamo)
     {
-        this.gb.delete(estadoPrestamo);
+        this.gb.Estados_Prestamos.Remove(estadoPrestamo);
     }
-    public void borrarRelacionPrestamoLibro(Rel_Prestamo_Libro relacion)
-    {
-        this.gb.delete(relacion);
-    }
-
 }

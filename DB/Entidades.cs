@@ -18,9 +18,11 @@ namespace DB
 
         public string apellidos_autor { get; set; }
 
+        public List<Libro> libros_con_autor { get; set; }
+
     }
 
-    public class Rel_Autores_Libros
+   /* public class Rel_Autores_Libros
     {
         [Key]
         public long id_rel_autores_libros { get; set; }
@@ -34,7 +36,7 @@ namespace DB
         public Libro libro { get; set; }
 
 
-    }
+    }*/
 
     public class Libro
     {
@@ -61,6 +63,11 @@ namespace DB
         [ForeignKey("id_coleccion")]
         public Coleccion coleccion { get; set; }
 
+        public List<Autor> libro_con_autores { get; set; }
+        public List<Prestamo> libro_con_prestamos { get; set; }
+
+
+
 
     }
 
@@ -69,6 +76,9 @@ namespace DB
         [Key]
         public long id_editorial { get; set; }
         public string nombre_editorial { get; set; }
+
+        public List<Libro> editorial_con_libros { get; set; }
+
 
     }
     public class Genero
@@ -79,6 +89,8 @@ namespace DB
         public string nombre_genero { get; set; }
 
         public string descripcion_genero { get; set; }
+
+        public List<Libro> genero_con_libros { get; set; }
     }
 
     public class Coleccion
@@ -86,6 +98,8 @@ namespace DB
         [Key]
         public long id_coleccion { get; set; }
         public string nombre_coleccion { get; set; }
+
+        public List<Libro> coleccion_con_libros { get; set; }
     }
     public class Acceso
     {
@@ -93,6 +107,8 @@ namespace DB
         public long id_acceso { get; set; }
         public string codigo_acceso { get; set; }
         public string descipcion_acceso { get; set; }
+
+        public List<Usuario> usuarios_con_acesso { get; set; }
     }
 
     public class Usuario
@@ -114,6 +130,8 @@ namespace DB
         public DateTime fch_alta_usuario { get; set; }
         public DateTime fch_baja_usuario { get; set; }
 
+        public List<Prestamo> prestamos_de_usuario{ get; set; }
+
     }
     public class Prestamo
     {
@@ -130,7 +148,11 @@ namespace DB
         public long id_estado_prestamo { get; set; }
 
         [ForeignKey("id_estado_prestamo")]
-    public Estado_Prestamo estadoConPrestamo { get; set; }
+        public Estado_Prestamo estadoConPrestamo { get; set; }
+
+        public List<Libro> libros_de_prestamo { get; set; }
+
+
     }
     public class Estado_Prestamo
     {
@@ -138,9 +160,11 @@ namespace DB
         public long id_estado_prestamo { get; set; }
         public string codigo_estado_prestamo { get; set; }
         public string descripcion_estado_prestamo { get; set; }
+
+        public List<Prestamo> prestamos_con_estado { get; set; }
     }
 
-    public class Rel_Prestamo_Libro
+    /*public class Rel_Prestamo_Libro
     {
         [Key]
         public long id_rel_prestamo_libro { get; set; }
@@ -152,5 +176,5 @@ namespace DB
         public long id_libro { get; set; }
         [ForeignKey("id_libro")]
         Libro libro { get; set; }
-    }
+    }*/
 }

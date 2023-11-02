@@ -6,10 +6,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DB.Migrations
 {
-    /// <inheritdoc />
-    public partial class migracionInicial : Migration
+    public partial class migracion4 : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -92,20 +90,6 @@ namespace DB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Generos", x => x.id_genero);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rel_Prestamo_Libros",
-                columns: table => new
-                {
-                    id_rel_prestamo_libro = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    id_prestamo = table.Column<long>(type: "bigint", nullable: false),
-                    id_libro = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rel_Prestamo_Libros", x => x.id_rel_prestamo_libro);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,30 +188,62 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rel_Autores_Libros",
+                name: "AutorLibro",
                 columns: table => new
                 {
-                    id_rel_autores_libros = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    id_autor = table.Column<long>(type: "bigint", nullable: false),
-                    id_libro = table.Column<long>(type: "bigint", nullable: false)
+                    libro_con_autoresid_autor = table.Column<long>(type: "bigint", nullable: false),
+                    libros_con_autorid_libro = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rel_Autores_Libros", x => x.id_rel_autores_libros);
+                    table.PrimaryKey("PK_AutorLibro", x => new { x.libro_con_autoresid_autor, x.libros_con_autorid_libro });
                     table.ForeignKey(
-                        name: "FK_Rel_Autores_Libros_Autores_id_autor",
-                        column: x => x.id_autor,
+                        name: "FK_AutorLibro_Autores_libro_con_autoresid_autor",
+                        column: x => x.libro_con_autoresid_autor,
                         principalTable: "Autores",
                         principalColumn: "id_autor",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rel_Autores_Libros_Libros_id_libro",
-                        column: x => x.id_libro,
+                        name: "FK_AutorLibro_Libros_libros_con_autorid_libro",
+                        column: x => x.libros_con_autorid_libro,
                         principalTable: "Libros",
                         principalColumn: "id_libro",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "LibroPrestamo",
+                columns: table => new
+                {
+                    libro_con_prestamosid_prestamo = table.Column<long>(type: "bigint", nullable: false),
+                    libros_de_prestamoid_libro = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LibroPrestamo", x => new { x.libro_con_prestamosid_prestamo, x.libros_de_prestamoid_libro });
+                    table.ForeignKey(
+                        name: "FK_LibroPrestamo_Libros_libros_de_prestamoid_libro",
+                        column: x => x.libros_de_prestamoid_libro,
+                        principalTable: "Libros",
+                        principalColumn: "id_libro",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LibroPrestamo_Prestamos_libro_con_prestamosid_prestamo",
+                        column: x => x.libro_con_prestamosid_prestamo,
+                        principalTable: "Prestamos",
+                        principalColumn: "id_prestamo",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AutorLibro_libros_con_autorid_libro",
+                table: "AutorLibro",
+                column: "libros_con_autorid_libro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibroPrestamo_libros_de_prestamoid_libro",
+                table: "LibroPrestamo",
+                column: "libros_de_prestamoid_libro");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Libros_id_coleccion",
@@ -255,38 +271,18 @@ namespace DB.Migrations
                 column: "id_usuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rel_Autores_Libros_id_autor",
-                table: "Rel_Autores_Libros",
-                column: "id_autor");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rel_Autores_Libros_id_libro",
-                table: "Rel_Autores_Libros",
-                column: "id_libro");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_id_acceso",
                 table: "Usuarios",
                 column: "id_acceso");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Prestamos");
+                name: "AutorLibro");
 
             migrationBuilder.DropTable(
-                name: "Rel_Autores_Libros");
-
-            migrationBuilder.DropTable(
-                name: "Rel_Prestamo_Libros");
-
-            migrationBuilder.DropTable(
-                name: "Estados_Prestamos");
-
-            migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "LibroPrestamo");
 
             migrationBuilder.DropTable(
                 name: "Autores");
@@ -295,7 +291,7 @@ namespace DB.Migrations
                 name: "Libros");
 
             migrationBuilder.DropTable(
-                name: "Accesos");
+                name: "Prestamos");
 
             migrationBuilder.DropTable(
                 name: "Colecciones");
@@ -305,6 +301,15 @@ namespace DB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Generos");
+
+            migrationBuilder.DropTable(
+                name: "Estados_Prestamos");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Accesos");
         }
     }
 }

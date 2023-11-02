@@ -12,6 +12,13 @@ namespace modeloVirtualCChar.Controllers
         public HomeController(gestorBibliotecaContext contexto)
         {
             this.contexto = contexto;
+            Autor a = new Autor();
+            a.nombre_autor = "Filloa";
+            a.apellidos_autor = "Molina";
+            a.libros_con_autor = new List<Libro>();
+            Insert i = new Insert(contexto);
+            i.insertarAutor(a);
+
         }
 
         public IActionResult Index()

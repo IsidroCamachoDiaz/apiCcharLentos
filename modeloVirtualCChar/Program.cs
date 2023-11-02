@@ -11,7 +11,6 @@ o => o.UseNpgsql(builder.Configuration.GetConnectionString("dbConnection")));
 var app = builder.Build();
 
 
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

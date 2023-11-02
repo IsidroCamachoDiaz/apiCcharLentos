@@ -12,18 +12,32 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DB.Migrations
 {
     [DbContext(typeof(gestorBibliotecaContext))]
-    [Migration("20231026120659_migracionInicial")]
-    partial class migracionInicial
+    [Migration("20231102121922_migracion4")]
+    partial class migracion4
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
+
+            modelBuilder.Entity("AutorLibro", b =>
+                {
+                    b.Property<long>("libro_con_autoresid_autor")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("libros_con_autorid_libro")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("libro_con_autoresid_autor", "libros_con_autorid_libro");
+
+                    b.HasIndex("libros_con_autorid_libro");
+
+                    b.ToTable("AutorLibro");
+                });
 
             modelBuilder.Entity("DB.Acceso", b =>
                 {
@@ -218,48 +232,6 @@ namespace DB.Migrations
                     b.ToTable("Prestamos");
                 });
 
-            modelBuilder.Entity("DB.Rel_Autores_Libros", b =>
-                {
-                    b.Property<long>("id_rel_autores_libros")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("id_rel_autores_libros"));
-
-                    b.Property<long>("id_autor")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("id_libro")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("id_rel_autores_libros");
-
-                    b.HasIndex("id_autor");
-
-                    b.HasIndex("id_libro");
-
-                    b.ToTable("Rel_Autores_Libros");
-                });
-
-            modelBuilder.Entity("DB.Rel_Prestamo_Libro", b =>
-                {
-                    b.Property<long>("id_rel_prestamo_libro")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("id_rel_prestamo_libro"));
-
-                    b.Property<long>("id_libro")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("id_prestamo")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("id_rel_prestamo_libro");
-
-                    b.ToTable("Rel_Prestamo_Libros");
-                });
-
             modelBuilder.Entity("DB.Usuario", b =>
                 {
                     b.Property<long>("id_usuario")
@@ -314,22 +286,52 @@ namespace DB.Migrations
                     b.ToTable("Usuarios");
                 });
 
+            modelBuilder.Entity("LibroPrestamo", b =>
+                {
+                    b.Property<long>("libro_con_prestamosid_prestamo")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("libros_de_prestamoid_libro")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("libro_con_prestamosid_prestamo", "libros_de_prestamoid_libro");
+
+                    b.HasIndex("libros_de_prestamoid_libro");
+
+                    b.ToTable("LibroPrestamo");
+                });
+
+            modelBuilder.Entity("AutorLibro", b =>
+                {
+                    b.HasOne("DB.Autor", null)
+                        .WithMany()
+                        .HasForeignKey("libro_con_autoresid_autor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Libro", null)
+                        .WithMany()
+                        .HasForeignKey("libros_con_autorid_libro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DB.Libro", b =>
                 {
                     b.HasOne("DB.Coleccion", "coleccion")
-                        .WithMany()
+                        .WithMany("coleccion_con_libros")
                         .HasForeignKey("id_coleccion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DB.Editorial", "editorial")
-                        .WithMany()
+                        .WithMany("editorial_con_libros")
                         .HasForeignKey("id_editorial")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DB.Genero", "genero")
-                        .WithMany()
+                        .WithMany("genero_con_libros")
                         .HasForeignKey("id_genero")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -344,13 +346,13 @@ namespace DB.Migrations
             modelBuilder.Entity("DB.Prestamo", b =>
                 {
                     b.HasOne("DB.Estado_Prestamo", "estadoConPrestamo")
-                        .WithMany()
+                        .WithMany("prestamos_con_estado")
                         .HasForeignKey("id_estado_prestamo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DB.Usuario", "usuario")
-                        .WithMany()
+                        .WithMany("prestamos_de_usuario")
                         .HasForeignKey("id_usuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -360,34 +362,60 @@ namespace DB.Migrations
                     b.Navigation("usuario");
                 });
 
-            modelBuilder.Entity("DB.Rel_Autores_Libros", b =>
-                {
-                    b.HasOne("DB.Autor", "autor")
-                        .WithMany()
-                        .HasForeignKey("id_autor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DB.Libro", "libro")
-                        .WithMany()
-                        .HasForeignKey("id_libro")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("autor");
-
-                    b.Navigation("libro");
-                });
-
             modelBuilder.Entity("DB.Usuario", b =>
                 {
                     b.HasOne("DB.Acceso", "acceso")
-                        .WithMany()
+                        .WithMany("usuarios_con_acesso")
                         .HasForeignKey("id_acceso")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("acceso");
+                });
+
+            modelBuilder.Entity("LibroPrestamo", b =>
+                {
+                    b.HasOne("DB.Prestamo", null)
+                        .WithMany()
+                        .HasForeignKey("libro_con_prestamosid_prestamo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DB.Libro", null)
+                        .WithMany()
+                        .HasForeignKey("libros_de_prestamoid_libro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DB.Acceso", b =>
+                {
+                    b.Navigation("usuarios_con_acesso");
+                });
+
+            modelBuilder.Entity("DB.Coleccion", b =>
+                {
+                    b.Navigation("coleccion_con_libros");
+                });
+
+            modelBuilder.Entity("DB.Editorial", b =>
+                {
+                    b.Navigation("editorial_con_libros");
+                });
+
+            modelBuilder.Entity("DB.Estado_Prestamo", b =>
+                {
+                    b.Navigation("prestamos_con_estado");
+                });
+
+            modelBuilder.Entity("DB.Genero", b =>
+                {
+                    b.Navigation("genero_con_libros");
+                });
+
+            modelBuilder.Entity("DB.Usuario", b =>
+                {
+                    b.Navigation("prestamos_de_usuario");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,12 +29,12 @@ namespace modeloVirtualCChar.Controllers
             i.insertarColeccion(co);
             i.insertarLibro(l);
             contexto.SaveChanges();*/
-            Select s = new Select(contexto);
+            /*Select s = new Select(contexto);
             List <Autor> autores=s.seleccionarAutor(); 
             for(int i = 0; i < autores.Count; i++)
             {
                 Console.WriteLine(autores[i].id_autor+" " + autores[i].nombre_autor+" " + autores[i].apellidos_autor);
-            }
+            }*/
 
         }
 

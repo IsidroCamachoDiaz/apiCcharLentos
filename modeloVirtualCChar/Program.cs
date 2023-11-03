@@ -3,10 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.AddControllers(options =>
+    //options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<gestorBibliotecaContext>(
+builder.Services.AddDbContext<GestorBibliotecaContext>(
 o => o.UseNpgsql(builder.Configuration.GetConnectionString("dbConnection")));
 var app = builder.Build();
 

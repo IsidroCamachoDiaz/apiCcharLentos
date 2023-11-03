@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DB.Migrations
 {
-    [DbContext(typeof(gestorBibliotecaContext))]
+    [DbContext(typeof(GestorBibliotecaContext))]
     [Migration("20231102121922_migracion4")]
     partial class migracion4
     {

@@ -3,8 +3,8 @@ using System;
 
 public class Update { 
 
-    public gestorBibliotecaContext gb;
-    public Update(gestorBibliotecaContext gestorBibliotecaContext)
+    public GestorBibliotecaContext gb;
+    public Update(GestorBibliotecaContext gestorBibliotecaContext)
     {
         this.gb = gestorBibliotecaContext;
     }

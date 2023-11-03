@@ -7,9 +7,9 @@ namespace modeloVirtualCChar.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly gestorBibliotecaContext contexto;
+        private readonly GestorBibliotecaContext contexto;
 
-        public HomeController(gestorBibliotecaContext contexto)
+        public HomeController(GestorBibliotecaContext contexto)
         {
             this.contexto = contexto;
             /*Autor a = new Autor("Adolf", "Hitler", new List<Libro>());

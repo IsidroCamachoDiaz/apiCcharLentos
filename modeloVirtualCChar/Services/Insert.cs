@@ -3,9 +3,9 @@ using System;
 
 public class Insert
 {
-    public gestorBibliotecaContext gb;
+    public GestorBibliotecaContext gb;
 
-    public Insert(gestorBibliotecaContext gestorBibliotecaContext)
+    public Insert(GestorBibliotecaContext gestorBibliotecaContext)
     {
         this.gb=gestorBibliotecaContext;
     }

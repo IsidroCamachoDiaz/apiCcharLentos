@@ -3,9 +3,9 @@ using System;
 
 public class Delete
 {
-    public gestorBibliotecaContext gb;
+    public GestorBibliotecaContext gb;
 
-    public Delete(gestorBibliotecaContext gestorBibliotecaContext)
+    public Delete(GestorBibliotecaContext gestorBibliotecaContext)
     {
         this.gb = gestorBibliotecaContext;
     }

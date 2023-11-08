@@ -142,14 +142,14 @@ namespace DB
         [Key]
         public long id_acceso { get; set; }
         public string codigo_acceso { get; set; }
-        public string descipcion_acceso { get; set; }
+        public string descripcion_acceso { get; set; }
 
         public List<Usuario>? usuarios_con_acesso { get; set; }
 
         public Acceso(string codigo_acceso, string descipcion_acceso)
         {
             this.codigo_acceso = codigo_acceso;
-            this.descipcion_acceso = descipcion_acceso;
+            this.descripcion_acceso = descipcion_acceso;
         }
         public Acceso()
         {

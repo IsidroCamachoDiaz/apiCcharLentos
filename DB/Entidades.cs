@@ -170,7 +170,7 @@ namespace DB
 
         public long id_acceso { get; set; }
         [ForeignKey("id_acceso")]
-        public Acceso acceso { get; set; }
+        public Acceso? acceso { get; set; }
         public bool estaBloqueado_usuario { get; set; }
         public DateTime fch_fin_bloqueo_usuario { get; set; }
         public DateTime fch_alta_usuario { get; set; }

@@ -15,7 +15,7 @@ namespace DB
         }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=gestorBibliotecaPersonal;User Id=postgres;Password=;SearchPath=gbp_operacional");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=gestorBibliotecaPersonal;User Id=postgres;Password=clave;SearchPath=gbp_operacional");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -119,5 +119,57 @@ namespace modeloVirtualCChar.Controllers
         {
             return (_context.Usuarios?.Any(e => e.id_usuario == id)).GetValueOrDefault();
         }
-    }
+
+		// GET: api/Usuarios/correo
+		[HttpGet("correo/{correo}")]
+		public async Task<ActionResult<Usuario>> GetUsuarioByCorreo(string correo)
+		{
+			if (_context.Usuarios == null)
+			{
+				return NotFound();
+			}
+			var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.email_usuario == correo);
+
+			if (usuario == null)
+			{
+				return NotFound();
+			}
+
+			return usuario;
+		}
+		// GET: api/Usuarios/dni
+		[HttpGet("dni/{dni}")]
+		public async Task<ActionResult<Usuario>> GetUsuarioByDni(string dni)
+		{
+			if (_context.Usuarios == null)
+			{
+				return NotFound();
+			}
+			var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.dni_usuario == dni);
+
+			if (usuario == null)
+			{
+				return NotFound();
+			}
+
+			return usuario;
+		}
+		// GET: api/Usuarios/telefono
+		[HttpGet("telefono/{telefono}")]
+		public async Task<ActionResult<Usuario>> GetUsuarioByTelefono(string telefono)
+		{
+			if (_context.Usuarios == null)
+			{
+				return NotFound();
+			}
+			var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.tlf_usuario == telefono);
+
+			if (usuario == null)
+			{
+				return NotFound();
+			}
+
+			return usuario;
+		}
+	}
 }
